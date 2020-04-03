@@ -3,7 +3,7 @@
 #include <unordered_set>
 #include <ctime>
 #include <cstdlib>
-#include <chrono>
+#include "timing.h"
 
 std::set<int> rand_set(int length, int min, int max)
 {
@@ -75,19 +75,15 @@ int main()
 {
     std::set<int> sa = rand_set(1000000, 1, 10000000);
     std::set<int> sb = rand_set(1000000, 1, 10000000);
-    auto start = std::chrono::high_resolution_clock::now();
-    std::set<int> sab = intersect(sa, sb);
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> interval = end - start;
-    std::cout << sab.size() << std::endl;
-    std::cout << RAND_MAX << std::endl;
-    std::cout << interval.count() << std::endl;
     std::unordered_set<int> usa = rand_uset(1000000, 1, 10000000);
     std::unordered_set<int> usb = rand_uset(1000000, 1, 10000000);
-    auto ustart = std::chrono::high_resolution_clock::now();
-    std::unordered_set<int> usab = uintersect(usa, usb);
-    auto uend = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> uinterval = uend - ustart;
-    std::cout << uinterval.count() << std::endl;
+    std::set<int> sab = timing<std::set<int>>([&sa, &sb]() {
+        return intersect(sa, sb);
+    });
+    std::cout << sab.size() << std::endl;
+    std::unordered_set<int> usab = timing<std::unordered_set<int>>([&usa, &usb] {
+        return uintersect(usa, usb);
+    });
+    std::cout << usab.size() << std::endl;
     return 0;
 }

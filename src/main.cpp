@@ -3,6 +3,8 @@
 #include <unordered_set>
 #include <ctime>
 #include <cstdlib>
+#include <vector>
+#include <algorithm>
 #include "timing.h"
 
 std::set<int> rand_set(int length, int min, int max)
@@ -85,5 +87,28 @@ int main()
         return uintersect(usa, usb);
     });
     std::cout << usab.size() << std::endl;
+    std::set<int> asab = timing<std::set<int>>([&sa, &sb]() {
+        std::vector<int> result(sa.size());
+        auto end = std::set_intersection(
+            sa.begin(), sa.end(),
+            sb.begin(), sb.end(),
+            result.begin());
+        result.resize(end - result.begin());
+        return std::set<int>(result.begin(), result.end());
+    });
+    std::cout << asab.size() << std::endl;
+
+    std::vector<int> va(sa.begin(), sa.end());
+    std::vector<int> vb(sb.begin(), sb.end());
+    std::vector<int> vab = timing<std::vector<int>>([&va, &vb]() {
+        std::vector<int> result(va.size());
+        auto end = std::set_intersection(
+            va.begin(), va.end(),
+            vb.begin(), vb.end(),
+            result.begin());
+        result.resize(end - result.begin());
+        return result;
+    });
+    std::cout << vab.size() << std::endl;
     return 0;
 }

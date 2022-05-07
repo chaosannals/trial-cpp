@@ -1,0 +1,3 @@
+[submodule "baredemo/lib/elements"]
+	path = baredemo/lib/elements
+	url = git@github.com:cycfi/elements.git

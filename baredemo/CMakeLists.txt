@@ -23,7 +23,26 @@ set(ELEMENTS_APP_VERSION "1.0")
 set(ELEMENTS_APP_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 set(ELEMENTS_APP_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/res/deep_space.jpg)
 
-
+if (WIN32)
+   if (MSVC)
+      message(STATUS "msvc ${PROJECT_SOURCE_DIR}")
+      if (CMAKE_CL_64)
+         message(STATUS "x64 ${PROJECT_SOURCE_DIR}")
+         #link_directories(AFTER ${PROJECT_SOURCE_DIR}/lib/libmatoya/winx64)
+         set(ELEMENTS_APP_INCLUDE_DIRECTORIES ${PROJECT_SOURCE_DIR}/lib/libmatoya/winx64)
+         # bcrypt.lib d3d11.lib d3d9.lib hid.lib uuid.lib dxguid.lib opengl32.lib ws2_32.lib user32.lib gdi32.lib xinput9_1_0.lib ole32.lib shell32.lib windowscodecs.lib shlwapi.lib imm32.lib winmm.lib winhttp.lib secur32.lib crypt32.lib
+         set(ELEMENTS_APP_DEPENDENCIES Bcrypt.lib ${PROJECT_SOURCE_DIR}/lib/libmatoya/winx64/matoya.lib)
+      else()
+         message(STATUS "x86 ${PROJECT_SOURCE_DIR}")
+         #link_directories(AFTER ${PROJECT_SOURCE_DIR}/lib/libmatoya/winx32)
+         set(ELEMENTS_APP_INCLUDE_DIRECTORIES ${PROJECT_SOURCE_DIR}/lib/libmatoya/winx32)
+         # bcrypt.lib d3d11.lib d3d9.lib hid.lib uuid.lib dxguid.lib opengl32.lib ws2_32.lib user32.lib gdi32.lib xinput9_1_0.lib ole32.lib shell32.lib windowscodecs.lib shlwapi.lib imm32.lib winmm.lib winhttp.lib secur32.lib crypt32.lib
+         set(ELEMENTS_APP_DEPENDENCIES Bcrypt.lib ${PROJECT_SOURCE_DIR}/lib/libmatoya/winx32/matoya.lib)
+      endif()
+   endif()
+endif()
 
 include(AppIcon)
 include(ElementsConfigApp)
+
+set_property(TARGET baredemo APPEND PROPERTY INCLUDE_DIRECTORIES ${PROJECT_SOURCE_DIR}/lib/libmatoya/winx64)

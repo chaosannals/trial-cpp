@@ -3,6 +3,8 @@ project(baredemo LANGUAGES C CXX)
 
 set(ELEMENTS_ROOT ${PROJECT_SOURCE_DIR}/lib/elements)
 
+option(VS_LINK_STATIC_MT "static link mt." OFF)
+
 # Make sure ELEMENTS_ROOT is an absolute path to add to the CMake module path
 get_filename_component(ELEMENTS_ROOT "${ELEMENTS_ROOT}" ABSOLUTE)
 set (CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${ELEMENTS_ROOT}/cmake")
@@ -26,6 +28,12 @@ set(ELEMENTS_APP_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/res/deep_space.jpg)
 if (WIN32)
    if (MSVC)
       message(STATUS "msvc ${PROJECT_SOURCE_DIR}")
+
+      if (VS_LINK_STATIC_MT)
+         set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+         message(STATUS "msvc MT")
+      endif()
+
       if (CMAKE_CL_64)
          message(STATUS "x64 ${PROJECT_SOURCE_DIR}")
          #link_directories(AFTER ${PROJECT_SOURCE_DIR}/lib/libmatoya/winx64)

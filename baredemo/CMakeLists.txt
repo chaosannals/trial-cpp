@@ -1,6 +1,19 @@
 cmake_minimum_required(VERSION 3.9.6...3.15.0)
 project(baredemo LANGUAGES C CXX)
 
+set(CMAKE_CXX_STANDARD 17)
+
+if (WIN32)
+   if (MSVC)
+
+      # 静态运行库 MT
+      if (VS_LINK_STATIC_MT)
+         set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+         message(STATUS "msvc MT , element md")
+      endif()
+   endif()
+endif()
+
 set(ELEMENTS_ROOT ${PROJECT_SOURCE_DIR}/lib/elements)
 
 option(VS_LINK_STATIC_MT "static link mt." OFF)
@@ -28,11 +41,6 @@ set(ELEMENTS_APP_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/res/deep_space.jpg)
 if (WIN32)
    if (MSVC)
       message(STATUS "msvc ${PROJECT_SOURCE_DIR}")
-
-      if (VS_LINK_STATIC_MT)
-         set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-         message(STATUS "msvc MT")
-      endif()
 
       if (CMAKE_CL_64)
          message(STATUS "x64 ${PROJECT_SOURCE_DIR}")

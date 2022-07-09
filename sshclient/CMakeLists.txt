@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.9.6...3.15.0)
-project(baredemo LANGUAGES C CXX)
+project(sshclient LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -28,15 +28,21 @@ if (NOT ELEMENTS_BUILD_EXAMPLES)
    add_subdirectory(${ELEMENTS_ROOT} elements)
 endif()
 
-set(ELEMENTS_APP_PROJECT "baredemo")
-set(ELEMENTS_APP_TITLE "bare demo")
+set(ELEMENTS_APP_PROJECT "sshclient")
+set(ELEMENTS_APP_TITLE "SSH Client")
 set(ELEMENTS_APP_COPYRIGHT "Copyright (c) 2016-2020 Joel de Guzman")
 set(ELEMENTS_APP_ID "com.cycfi.empty-starter")
 set(ELEMENTS_APP_VERSION "1.0")
 
 set(ELEMENTS_APP_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 file(GLOB SSHCLIENT_VIEW_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/view/*.cpp)
-list(APPEND ELEMENTS_APP_SOURCES SSHCLIENT_VIEW_SOURCES)
+file(GLOB SSHCLIENT_VIEW_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/src/view/*.h)
+list(APPEND ELEMENTS_APP_SOURCES ${SSHCLIENT_VIEW_SOURCES})
+list(APPEND ELEMENTS_APP_SOURCES ${SSHCLIENT_VIEW_HEADERS})
+# message(STATUS ${ELEMENTS_APP_SOURCES})
 
 include(AppIcon)
 include(ElementsConfigApp)
+
+source_group("Source Files/view" FILES ${SSHCLIENT_VIEW_SOURCES})
+source_group("Header Files/view" FILES ${SSHCLIENT_VIEW_HEADERS})

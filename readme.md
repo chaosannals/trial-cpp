@@ -22,3 +22,18 @@ git submodule update --init --recursive
 	url = https://github.com/cycfi/elements.git
 	ignore = dirty
 ```
+
+
+## 附录
+
+### windows
+
+windows 下构建 把 ninja 改成  vs 。
+
+如果使用 ninja 生成，需要一堆 linux 迁移到 windows 下的依赖工具。
+
+[gnome 下载 win32 ](https://download.gnome.org/binaries/win32/dependencies/)
+[gnome 下载 win64 ](https://download.gnome.org/binaries/win64/dependencies/)
+
+注：Could NOT find PkgConfig (missing: PKG_CONFIG_EXECUTABLE)
+下载 pkg-config 

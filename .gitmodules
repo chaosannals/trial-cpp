@@ -1,3 +1,60 @@
 [submodule "libs/spdlog"]
 	path = libs/spdlog
 	url = git@github.com:gabime/spdlog.git
+[submodule "boostrial/libs/asio"]
+	path = boostrial/libs/asio
+	url = git@github.com:boostorg/asio.git
+[submodule "boostrial/libs/bind"]
+	path = boostrial/libs/bind
+	url = git@github.com:boostorg/bind.git
+[submodule "boostrial/libs/core"]
+	path = boostrial/libs/core
+	url = git@github.com:boostorg/core.git
+[submodule "boostrial/libs/system"]
+	path = boostrial/libs/system
+	url = git@github.com:boostorg/system.git
+[submodule "boostrial/libs/config"]
+	path = boostrial/libs/config
+	url = git@github.com:boostorg/config.git
+[submodule "boostrial/libs/winapi"]
+	path = boostrial/libs/winapi
+	url = git@github.com:boostorg/winapi.git
+[submodule "boostrial/libs/regex"]
+	path = boostrial/libs/regex
+	url = git@github.com:boostorg/regex.git
+[submodule "boostrial/libs/predef"]
+	path = boostrial/libs/predef
+	url = git@github.com:boostorg/predef.git
+[submodule "boostrial/libs/throw_exception"]
+	path = boostrial/libs/throw_exception
+	url = git@github.com:boostorg/throw_exception.git
+[submodule "boostrial/libs/date_time"]
+	path = boostrial/libs/date_time
+	url = git@github.com:boostorg/date_time.git
+[submodule "boostrial/libs/assert"]
+	path = boostrial/libs/assert
+	url = git@github.com:boostorg/assert.git
+[submodule "boostrial/libs/smart_ptr"]
+	path = boostrial/libs/smart_ptr
+	url = git@github.com:boostorg/smart_ptr.git
+[submodule "boostrial/libs/utility"]
+	path = boostrial/libs/utility
+	url = git@github.com:boostorg/utility.git
+[submodule "boostrial/libs/static_assert"]
+	path = boostrial/libs/static_assert
+	url = git@github.com:boostorg/static_assert.git
+[submodule "boostrial/libs/type_traits"]
+	path = boostrial/libs/type_traits
+	url = git@github.com:boostorg/type_traits.git
+[submodule "boostrial/libs/numeric_conversion"]
+	path = boostrial/libs/numeric_conversion
+	url = git@github.com:boostorg/numeric_conversion.git
+[submodule "boostrial/libs/mpl"]
+	path = boostrial/libs/mpl
+	url = git@github.com:boostorg/mpl.git
+[submodule "boostrial/libs/preprocessor"]
+	path = boostrial/libs/preprocessor
+	url = git@github.com:boostorg/preprocessor.git
+[submodule "boostrial/libs/align"]
+	path = boostrial/libs/align
+	url = git@github.com:boostorg/align.git

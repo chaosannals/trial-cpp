@@ -20,7 +20,7 @@ option(VS_LINK_STATIC_MT "static link mt." OFF)
 
 # Make sure ELEMENTS_ROOT is an absolute path to add to the CMake module path
 get_filename_component(ELEMENTS_ROOT "${ELEMENTS_ROOT}" ABSOLUTE)
-set (CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${ELEMENTS_ROOT}/cmake")
+set (CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${ELEMENTS_ROOT}/cmake;${PROJECT_SOURCE_DIR}/cmake")
 
 # If we are building outside the project, you need to set ELEMENTS_ROOT:
 if (NOT ELEMENTS_BUILD_EXAMPLES)
@@ -60,5 +60,7 @@ endif()
 
 include(AppIcon)
 include(ElementsConfigApp)
+include(ExertDepRes)
+
 
 set_property(TARGET baredemo APPEND PROPERTY INCLUDE_DIRECTORIES ${PROJECT_SOURCE_DIR}/lib/libmatoya/winx64)

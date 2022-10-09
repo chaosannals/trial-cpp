@@ -1,4 +1,7 @@
 if (WIN32)
+    # Visual Studio 打开 sln 文件 和 直接打开 cmake 文件夹 调试时有差异。
+    # sln 执行路径是生成路径    cmake 目录是 生成路径/类型
+    # 复制的依赖资源要多复制一份。
     file(
         COPY ${ELEMENTS_RESOURCES} ${ELEMENTS_APP_RESOURCES}
         DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CONFIGURATION_TYPES}/resources"

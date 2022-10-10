@@ -13,6 +13,7 @@ if (WIN32)
    endif()
 endif()
 
+# 设置 ELEMENTS_ROOT 指定依赖的 elements 路径
 set(ELEMENTS_ROOT ${PROJECT_SOURCE_DIR}/lib/elements)
 
 option(VS_LINK_STATIC_MT "static link mt." OFF)
@@ -21,7 +22,7 @@ option(VS_LINK_STATIC_MT "static link mt." OFF)
 get_filename_component(ELEMENTS_ROOT "${ELEMENTS_ROOT}" ABSOLUTE)
 set (CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${ELEMENTS_ROOT}/cmake")
 
-# If we are building outside the project, you need to set ELEMENTS_ROOT:
+# 自建项目需要自己设置 ELEMENTS_ROOT:
 if (NOT ELEMENTS_BUILD_EXAMPLES)
    include(ElementsConfigCommon)
    set(ELEMENTS_BUILD_EXAMPLES OFF)

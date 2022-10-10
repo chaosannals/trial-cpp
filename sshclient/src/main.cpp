@@ -1,12 +1,9 @@
-#include <elements.hpp>
-
-using namespace cycfi::elements;
+﻿#include <elements.hpp>
+#include "view/main_app.h"
 
 int main(int argc, char* argv[])
 {
-    app _app(argc, argv, "SSH Client", "com.demo.sshclient");
-    window _win(_app.name());
-    _win.on_close = [&_app]() { _app.stop(); };
+    main_app _app(argc, argv);
     _app.run();
     return 0;
 }

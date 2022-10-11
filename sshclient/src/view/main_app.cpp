@@ -1,4 +1,4 @@
-#include "main_app.h"
+﻿#include "main_app.h"
 
 using namespace cycfi::elements;
 
@@ -15,12 +15,28 @@ main_app::main_app(int argc, char* argv[]) :
 
 	};
 
+	// 字体文件定位不到。
+	//char const* font_family = u8"文泉驿微米黑, \"WenQuanYi Micro Hei\"";
+	//std::string text(u8"asdfdsfdf一千条路");
+	char const* font_family = "文泉驿微米黑, \"WenQuanYi Micro Hei\"";
+	std::string text("asdfdsfdf一千条路");
+
 	_label = share(label("11111"));
 	_win.on_close = [this]() { stop(); };
 	_view.content(
 		layer(
 			vtile(
 				hold(_label),
+				scroller(
+					margin(
+						{ 20, 20, 20, 20 },
+						align_left_top(
+							hsize(800,
+								basic_text_box(text, font_descr{ font_family })
+							)
+						)
+					)
+				),
 				margin(
 					{ 50, 10, 50, 10 },
 					hold(btn)

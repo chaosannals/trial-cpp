@@ -1,4 +1,4 @@
-#ifndef EXERT_SSHCLIENT_VIEW_MAIN_APP_H
+﻿#ifndef EXERT_SSHCLIENT_VIEW_MAIN_APP_H
 #define EXERT_SSHCLIENT_VIEW_MAIN_APP_H
 
 #include <elements.hpp>

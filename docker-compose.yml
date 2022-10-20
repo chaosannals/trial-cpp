@@ -1,0 +1,17 @@
+version: '3.8'
+
+services: 
+  gcc:
+    image: gcc:10.2.0
+    container_name: gcc
+    volumes: 
+      - ./:/app
+    working_dir: /app
+    command: /bin/bash hold
+    networks: 
+      - gcc-net
+
+networks: 
+  gcc-net:
+    name: gcc-net
+    driver: bridge

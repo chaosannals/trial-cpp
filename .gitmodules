@@ -5,5 +5,5 @@
 	
 [submodule "sshclient/lib/elements"]
 	path = sshclient/lib/elements
-	url = https://github.com/cycfi/elements.git
+	url = git@github.com:cycfi/elements.git
 	ignore = dirty

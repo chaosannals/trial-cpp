@@ -61,3 +61,9 @@
 [submodule "boostrial/libs/align"]
 	path = boostrial/libs/align
 	url = git@github.com:boostorg/align.git
+[submodule "cmdemo/libs/libssh2"]
+	path = cmdemo/libs/libssh2
+	url = git@github.com:libssh2/libssh2.git
+[submodule "cmdemo/libs/openssl"]
+	path = cmdemo/libs/openssl
+	url = git@github.com:openssl/openssl.git

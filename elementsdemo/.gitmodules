@@ -1,0 +1,8 @@
+[submodule "sshclient/lib/elements"]
+	path = elementsdemo/sshclient/lib/elements
+	url = git@github.com:cycfi/elements.git
+	ignore = dirty
+[submodule "elementsdemo/baredemo/lib/elements"]
+	path = elementsdemo/baredemo/lib/elements
+	url = git@github.com:cycfi/elements.git
+	ignore = dirty

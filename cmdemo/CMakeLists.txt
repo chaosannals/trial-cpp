@@ -1,16 +1,18 @@
-cmake_minimum_required(VERSION 3.14)
+ï»¿cmake_minimum_required(VERSION 3.14)
 
 project(cmdemo LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD_REQUIRED 17)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED on)
+set(CMAKE_CXX_EXTENSIONS off)
 
 set(CMDEMO_LIBS_DIR "${PROJECT_SOURCE_DIR}/libs")
 set(CMDEMO_LIBSSH2_DIR "${CMDEMO_LIBS_DIR}/libssh2")
 set(CMDEMO_LIBSSH2_INC_DIR "${CMDEMO_LIBSSH2_DIR}/include")
 set(CMDEMO_LIBSSH2_OUT_DIR "${PROJECT_BINARY_DIR}/libs/libssh2/src/${CMAKE_CONFIGURATION_TYPES}")
 
-# ²»¼ÓÅäÖÃµÄ»°£¬windows »áÊ¹ÓÃÏµÍ³×Ô´øµÄ bcrypt.h  WinCNG£¬Õâ¸ö»á³öÏÖÒ»Ğ©¼æÈİÎÊÌâ¡£
-# Ê¹ÓÃ OpenSSL µÄÎÊÌâ×îÉÙ£¬µ«ÊÇ°²×°±È½ÏÂé·³¡£
+# ä¸åŠ é…ç½®çš„è¯ï¼Œwindows ä¼šä½¿ç”¨ç³»ç»Ÿè‡ªå¸¦çš„ bcrypt.h  WinCNGï¼Œè¿™ä¸ªä¼šå‡ºç°ä¸€äº›å…¼å®¹é—®é¢˜ã€‚
+# ä½¿ç”¨ OpenSSL çš„é—®é¢˜æœ€å°‘ï¼Œä½†æ˜¯å®‰è£…æ¯”è¾ƒéº»çƒ¦ã€‚
 add_subdirectory("libs/libssh2")
 add_subdirectory(ssh2demo)
 add_subdirectory(ocvdemo)

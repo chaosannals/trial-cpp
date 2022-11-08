@@ -18,8 +18,8 @@ target_link_directories(
 	${CMDEMO_LIBSSH2_OUT_DIR}
 )
 
-target_link_libraries(
-	ssh2demo
-	PRIVATE
-	libssh2
-)
+#target_link_libraries(
+#	ssh2demo
+#	PRIVATE
+#	libssh2
+#)

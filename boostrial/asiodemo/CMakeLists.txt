@@ -1,6 +1,19 @@
-cmake_minimum_required(VERSION 3.14)
+﻿cmake_minimum_required(VERSION 3.20)
+
+option(VS_LINK_STATIC_MT "static link mt." ON)
 
 project(asiodemo LANGUAGES CXX)
+
+if (WIN32)
+   if (MSVC)
+
+      # 静态运行库 MT
+      if (VS_LINK_STATIC_MT)
+         set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+         message(STATUS "msvc MT , element md")
+      endif()
+   endif()
+endif()
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

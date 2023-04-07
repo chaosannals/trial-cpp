@@ -26,8 +26,7 @@ target_sources(
 # 用户生成 .h 文件，生成后会自动把生成目录添加进 TARGET 的引入目录列表。
 slint_target_sources(
     slintdemo
-    #"src/ui/slintdemo_ui.slint" # 无法像 rust 一样使用子目录路径
-    "slintdemo_ui.slint"
+    "src/ui/slintdemo_ui.slint" # 修改路径会有缓存问题，清除，生成物都只保留 <basename>.h  不可重名。
 )
 
 target_link_libraries(slintdemo PRIVATE Slint::Slint)

@@ -1,8 +1,9 @@
+// slint æ–‡ä»¶å¿…é¡»æ˜¯ UTF8 é BOM çš„
 export component HelloWorld inherits Window {
     width: 400px;
     height: 400px;
 
-    // ÊôĞÔ Éú³É get_my_label ºÍ set_my_label º¯Êı£¬in out ·Ö±ğÓÃÀ´¿ª·ÅÕâ2¸öĞĞÊıpublic 
+    // å±æ€§ ç”Ÿæˆ get_my_label å’Œ set_my_label å‡½æ•°ï¼Œin out åˆ†åˆ«ç”¨æ¥å¼€æ”¾è¿™2ä¸ªè¡Œæ•°public 
     in-out property my_label <=> label.text;
 
     label := Text {

@@ -20,13 +20,20 @@ add_executable(slintdemo)
 target_sources(
     slintdemo
     PRIVATE
-    "main.cpp"
+    "src/main.cpp"
 )
 
-slint_target_sources(slintdemo slintdemo_ui.slint)
+# 用户生成 .h 文件，生成后会自动把生成目录添加进 TARGET 的引入目录列表。
+slint_target_sources(
+    slintdemo
+    #"src/ui/slintdemo_ui.slint" # 无法像 rust 一样使用子目录路径
+    "slintdemo_ui.slint"
+)
+
 target_link_libraries(slintdemo PRIVATE Slint::Slint)
-# On Windows, copy the Slint DLL next to the application binary so that it's found.
+
 if (WIN32)
+    # 在 Windows, 复制 Slint DLL
     add_custom_command(
         TARGET slintdemo
         POST_BUILD

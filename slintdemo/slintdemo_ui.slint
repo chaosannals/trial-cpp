@@ -2,7 +2,7 @@ export component HelloWorld inherits Window {
     width: 400px;
     height: 400px;
 
-    // Declare an alias that exposes the label's text property to C++
+    // 属性 生成 get_my_label 和 set_my_label 函数，in out 分别用来开放这2个行数public 
     in-out property my_label <=> label.text;
 
     label := Text {

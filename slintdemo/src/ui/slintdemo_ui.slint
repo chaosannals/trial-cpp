@@ -1,15 +1,34 @@
 // slint 文件必须是 UTF8 非 BOM 的
+
+import { SideBar } from "widgets/sidebar.slint";
+import { CounterPage } from "pages/counter_page.slint";
+import { AboutPage } from "pages/about_page.slint";
+
 export component HelloWorld inherits Window {
     width: 400px;
     height: 400px;
 
     // 属性 生成 get_my_label 和 set_my_label 函数，in out 分别用来开放这2个行数public 
     in-out property my_label <=> label.text;
+    in-out property my_page <=> side-bar.current_item;
 
     label := Text {
-       y: parent.width / 2;
-       x: parent.x + 200px;
-       text: "Hello, world";
-       color: blue;
+        // parent 是父级
+        // root 是根
+        y: root.width / 2;
+        x: root.x + 200px;
+        text: "Hello, world";
+        color: blue;
+    }
+
+    HorizontalLayout {
+        side-bar := SideBar {
+            title: "Slint Custom Sidebar";
+            model: ["Counter", "About", "CCCC"];
+        }
+
+        if (side-bar.current-item == 0): CounterPage{}
+        if (side-bar.current-item == 1): AboutPage{}
+        
     }
 }

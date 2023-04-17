@@ -8,3 +8,4 @@ project(slintdemo LANGUAGES CXX)
 IncludeSlintProject()
 
 add_subdirectory(demo1)
+add_subdirectory(demo2)

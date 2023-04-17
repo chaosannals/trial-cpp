@@ -1,4 +1,9 @@
 export component HelloWorld inherits Window {
     width: 400px;
     height: 400px;
+
+    // 标签生成物不向外暴露。
+    label := Text {
+        text: "The Label";
+    }
 }

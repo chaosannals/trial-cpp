@@ -1,0 +1,8 @@
+{
+  "endPoint": "oss-cn-shanghai.aliyuncs.com",
+  "keyId": "123",
+  "keySecret": "1234",
+  "bucket": "test",
+  "target": "testdir/aliosst.exe",
+  "source": "aliosst.exe"
+}

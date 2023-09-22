@@ -4,19 +4,21 @@
 int main() {
     std::cout << "ocv4demo start" << std::endl;
 
-    std::vector<std::string> pngs;
-    cv::glob("./*.png", pngs, false);
+    std::vector<std::string> img_paths, img_path_buf;
+    cv::glob("./*.png", img_paths, true);
+    cv::glob("./*.jpg", img_path_buf, true);
+    img_paths.insert(img_paths.end(), img_path_buf.begin(), img_path_buf.end());
 
-    std::cout << "png count: " << pngs.size() << std::endl;
-    for (auto png : pngs) {
-        std::cout << "img:" << png << std::endl;
-        cv::Mat in_img = cv::imread(png, cv::IMREAD_UNCHANGED);
+    std::cout << "image count: " << img_paths.size() << std::endl;
+    for (auto img_path : img_paths) {
+        std::cout << "img:" << img_path << std::endl;
+        cv::Mat in_img = cv::imread(img_path, cv::IMREAD_UNCHANGED);
         if (!in_img.empty()) {
-            // cv::namedWindow(png, cv::WINDOW_AUTOSIZE);
-            cv::imshow(png, in_img);
+            // cv::namedWindow(img_path, cv::WINDOW_AUTOSIZE);
+            cv::imshow(img_path, in_img);
             cv::Mat gray_img;
             cv::cvtColor(in_img, gray_img, cv::COLOR_BGR2GRAY);
-            cv::imshow(png, gray_img);
+            cv::imshow(img_path, gray_img);
         }
     }
 

@@ -1,124 +1,25 @@
 cmake_minimum_required(VERSION 3.24)
 
+message(STATUS "cmake bin dir: ${CMAKE_BINARY_DIR}")
+
 include(FetchContent)
 include(ExternalProject)
+include("cmake/ImportAliyunOss.cmake")
+include("cmake/ImportJsonCpp.cmake")
+include("cmake/ImportNlohmannJson.cmake")
 
-set(ALIYUN_OSS_SDK_DIR "${CMAKE_CURRENT_BINARY_DIR}/aliyunossdk")
-set(ALIYUN_OSS_SDK_SRC_DIR "${ALIYUN_OSS_SDK_DIR}/src")
-set(ALIYUN_OSS_SDK_BUILD_DIR "${ALIYUN_OSS_SDK_DIR}/build")
-set(ALIYUN_OSS_SDK_OUT_DIR "${ALIYUN_OSS_SDK_DIR}/out")
-
-message(STATUS "oss sdk dir: ${ALIYUN_OSS_SDK_DIR}")
-message(STATUS "oss sdk src dir: ${ALIYUN_OSS_SDK_SRC_DIR}")
-message(STATUS "oss sdk build dir: ${ALIYUN_OSS_SDK_BUILD_DIR}")
-message(STATUS "oss sdk out dir: ${ALIYUN_OSS_SDK_OUT_DIR}")
-
-# Ali settings TODO »•µÙ≤ª±ÿ“™µƒ±‡“ÎœÓƒø¿˝»Á æ¿˝
+# Ali settings TODO ÂéªÊéâ‰∏çÂøÖË¶ÅÁöÑÁºñËØëÈ°πÁõÆ‰æãÂ¶ÇÁ§∫‰æã
 # set(BUILD_SAMPLE OFF)
 message(STATUS "aliyun settings. ${CMAKE_BUILD_TYPE}")
 
-
-ExternalProject_Add(
-    AliYunOssSdk
-
-    GIT_REPOSITORY git@github.com:aliyun/aliyun-oss-cpp-sdk.git
-    GIT_TAG 1.9.1
-    
-    SOURCE_DIR "${ALIYUN_OSS_SDK_SRC_DIR}"
-
-    CONFIGURE_COMMAND "${CMAKE_COMMAND}" -S "${ALIYUN_OSS_SDK_SRC_DIR}" -B "${ALIYUN_OSS_SDK_BUILD_DIR}"
-	BUILD_COMMAND "${CMAKE_COMMAND}" "--build" "${ALIYUN_OSS_SDK_BUILD_DIR}" "--config" "${CMAKE_BUILD_TYPE}"
-
-    # ÷¥––∞≤◊∞ ${CMAKE_MAKE_PROGRAM}  « ninja °¢ make °¢nmake ÷Æ¡˜°£
-    INSTALL_COMMAND "${CMAKE_COMMAND}" "--install" "${ALIYUN_OSS_SDK_BUILD_DIR}" "--config" "${CMAKE_BUILD_TYPE}" "--prefix" "${ALIYUN_OSS_SDK_OUT_DIR}"
-
-    # ≈‰÷√ build Ω◊∂ŒæÕ…˙≥…ƒø±Í≤¢∞≤◊∞
-	STEP_TARGETS build
-	EXCLUDE_FROM_ALL TRUE
-)
-
-# TODO  π”√ ExternalProject ∑Ω ΩÃÊ¥˙ FetchContent ∑Ω Ω“˝»Î
-#set(NLOHMANN_JSON_DIR "${CMAKE_CURRENT_BINARY_DIR}/nlohmannjson")
-#set(NLOHMANN_JSON_SRC_DIR "${NLOHMANN_JSON_DIR}/src")
-#set(NLOHMANN_JSON_BUILD_DIR "${NLOHMANN_JSON_DIR}/build")
-#set(NLOHMANN_JSON_OUT_DIR "${NLOHMANN_JSON_DIR}/out")
-
-#ExternalProject_Add(
-#    NlohmannJson
-#
-#    GIT_REPOSITORY git@github.com:nlohmann/json.git
-#    GIT_TAG v3.11.2
-#
-#    SOURCE_DIR "${NLOHMANN_JSON_SRC_DIR}"
-#
-#    CONFIGURE_COMMAND "${CMAKE_COMMAND}" -S "${NLOHMANN_JSON_SRC_DIR}" -B "${NLOHMANN_JSON_BUILD_DIR}"
-#	BUILD_COMMAND "${CMAKE_COMMAND}" "--build" "${NLOHMANN_JSON_BUILD_DIR}" "--config" "${CMAKE_BUILD_TYPE}"
-#
-#    INSTALL_COMMAND "${CMAKE_COMMAND}" "--install" "${NLOHMANN_JSON_BUILD_DIR}" "--config" "${CMAKE_BUILD_TYPE}" "--prefix" "${NLOHMANN_JSON_OUT_DIR}"
-#
-#    STEP_TARGETS build
-#	EXCLUDE_FROM_ALL TRUE
-#)
-
-#message(STATUS "NlohmannJson dir: ${NLOHMANN_JSON_DIR}")
-#message(STATUS "NlohmannJson src dir: ${NLOHMANN_JSON_SRC_DIR}")
-#message(STATUS "NlohmannJson build dir: ${NLOHMANN_JSON_BUILD_DIR}")
-#message(STATUS "NlohmannJson out dir: ${NLOHMANN_JSON_OUT_DIR}")
-
-# ‘¥¬Î¿≠»°“ª÷± ß∞‹°£
-#FetchContent_Declare(
-#    json
-#    GIT_REPOSITORY git@github.com:nlohmann/json.git
-#    GIT_TAG v3.11.2
-#)
-#FetchContent_MakeAvailable(json)
-
-
-set(JSONCPP_DIR "${CMAKE_CURRENT_BINARY_DIR}/jsoncpp")
-set(JSONCPP_SRC_DIR "${JSONCPP_DIR}/src")
-set(JSONCPP_BUILD_DIR "${JSONCPP_DIR}/build")
-set(JSONCPP_OUT_DIR "${JSONCPP_DIR}/out")
-
-message(STATUS "JsonCpp dir: ${JSONCPP_DIR}")
-message(STATUS "JsonCpp src dir: ${JSONCPP_SRC_DIR}")
-message(STATUS "JsonCpp build dir: ${JSONCPP_BUILD_DIR}")
-message(STATUS "JsonCpp out dir: ${JSONCPP_OUT_DIR}")
-
-ExternalProject_Add(
-    JsonCpp
-
-    # github ”–«Ω£¨ π”√æµœÒ¡¥Ω”°£
-    GIT_REPOSITORY "https://gitclone.com/github.com/open-source-parsers/jsoncpp" 
-    # GIT_REPOSITORY "git@github.com:open-source-parsers/jsoncpp.git"
-    GIT_TAG 1.9.5
-
-    SOURCE_DIR "${JSONCPP_SRC_DIR}"
-
-    CONFIGURE_COMMAND "${CMAKE_COMMAND}" -S "${JSONCPP_SRC_DIR}" -B "${JSONCPP_BUILD_DIR}"
-	BUILD_COMMAND "${CMAKE_COMMAND}" "--build" "${JSONCPP_BUILD_DIR}" "--config" "${CMAKE_BUILD_TYPE}"
-
-    INSTALL_COMMAND "${CMAKE_COMMAND}" "--install" "${JSONCPP_BUILD_DIR}" "--config" "${CMAKE_BUILD_TYPE}" "--prefix" "${JSONCPP_OUT_DIR}"
-
-    STEP_TARGETS build
-	EXCLUDE_FROM_ALL TRUE
-)
-
-set(JSONCPP_DLL_DIR "${JSONCPP_OUT_DIR}/bin")
+ImportAliyunOssSdk()
+ImportJsonCpp()
+ImportNlohmannJson()
 
 project(aliossc)
+message(STATUS "project bin dir: ${PROJECT_BINARY_DIR}") # PROJECT_BINARY_DIR ÂøÖÈ°ªË¶Å project ‰πãÂêé
 
-# ’‚∏ˆ÷ªƒ‹«¯∑÷ VC µƒ cl.exe £¨∏’∫√∞¢¿Ôµƒø‚µ⁄»˝∑Ω“≤÷ª∏¯ Windows µƒ°£∂¯«“±ÿ–Î‘⁄ project ÷Æ∫Ûµ˜”√£¨≤ª»ª≤ª÷™µ¿…˙≥…ŒÔ «≤ª « MSVC
-if (MSVC)
-	if(CMAKE_CL_64)
-		set(ALIYUN_OSS_3P_DLL_DIR "${ALIYUN_OSS_SDK_SRC_DIR}/third_party/lib/x64")
-	else()
-		set(ALIYUN_OSS_3P_DLL_DIR "${ALIYUN_OSS_SDK_SRC_DIR}/third_party/lib/Win32")
-	endif()
-endif()
-
-message(STATUS "ali oss 3p dll dir: ${ALIYUN_OSS_3P_DLL_DIR}")
-file(GLOB ALIYUN_OSS_3P_DLL "${ALIYUN_OSS_3P_DLL_DIR}/*.dll")
-message(STATUS "ali oss 3p dlls: ${ALIYUN_OSS_3P_DLL}")
+ImportAliyunOssSdk3PLib()
 
 add_subdirectory(aliosst)
 add_subdirectory(test1)

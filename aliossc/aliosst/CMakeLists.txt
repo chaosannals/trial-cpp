@@ -23,6 +23,8 @@ add_dependencies(
 	JsonCpp
 )
 
+
+message(STATUS "include aliyun oss: ${ALIYUN_OSS_SDK_OUT_DIR}/include")
 target_include_directories(
 	aliosst
 	PUBLIC
@@ -30,15 +32,15 @@ target_include_directories(
 	"${JSONCPP_OUT_DIR}/include"
 )
 
-# ¸´ÖÆ DLL
+# å¤åˆ¶ DLL
 add_custom_command(
 	TARGET aliosst
 	POST_BUILD
 	COMMAND "${CMAKE_COMMAND}" "-E" "copy_directory" "${ALIYUN_OSS_3P_DLL_DIR}" "${CMAKE_CURRENT_BINARY_DIR}"
-	# Ê¹ÓÃ¾²Ì¬Á´½Ó¿ÉÒÔ²»ÓÃ
+	# ä½¿ç”¨é™æ€é“¾æ¥å¯ä»¥ä¸ç”¨
 	COMMAND "${CMAKE_COMMAND}" "-E" "copy_directory" "${JSONCPP_DLL_DIR}" "${CMAKE_CURRENT_BINARY_DIR}"
 
-	# ¸´ÖÆ json
+	# å¤åˆ¶ json
 	COMMAND "${CMAKE_COMMAND}" "-E" "copy_directory" "${CMAKE_CURRENT_SOURCE_DIR}/res" "${CMAKE_CURRENT_BINARY_DIR}"
 )
 
@@ -46,7 +48,7 @@ target_link_directories(
 	aliosst
 	PUBLIC
 	"${ALIYUN_OSS_SDK_OUT_DIR}/lib"
-	"${ALIYUN_OSS_3P_DLL_DIR}" # °¢ÀïÌ«À¬»ø£¬Õâ¸öÒòÎªÒÀÀµµÚÈı·½£¬ËùÒÔÄ¿Â¼Ãû¿´×ÅÊÇDLL£¬ÊµÔòÊÇ DLL ºÍ LIB ¶ªÒ»ÆğÁË¡£
+	"${ALIYUN_OSS_3P_DLL_DIR}" # é˜¿é‡Œå¤ªåƒåœ¾ï¼Œè¿™ä¸ªå› ä¸ºä¾èµ–ç¬¬ä¸‰æ–¹ï¼Œæ‰€ä»¥ç›®å½•åçœ‹ç€æ˜¯DLLï¼Œå®åˆ™æ˜¯ DLL å’Œ LIB ä¸¢ä¸€èµ·äº†ã€‚
 
 	"${JSONCPP_OUT_DIR}/lib"
 )
@@ -55,7 +57,7 @@ target_link_libraries(
 	aliosst
 	PUBLIC
 	alibabacloud-oss-cpp-sdk.lib
-	# ÒÔÏÂÊÇ ali oss sdk ÒÀÀµµÄ¿â£¬»¹Òª¸´ÖÆ dll
+	# ä»¥ä¸‹æ˜¯ ali oss sdk ä¾èµ–çš„åº“ï¼Œè¿˜è¦å¤åˆ¶ dll
 	libcurl.lib
 	libeay32.lib
 	ssleay32.lib

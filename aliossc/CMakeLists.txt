@@ -8,6 +8,7 @@ include("cmake/ImportAliyunOss.cmake")
 include("cmake/ImportJsonCpp.cmake")
 include("cmake/ImportNlohmannJson.cmake")
 include("cmake/ImportCmdline.cmake")
+include("cmake/ImportGflags.cmake")
 
 # Ali settings TODO 去掉不必要的编译项目例如示例
 # set(BUILD_SAMPLE OFF)
@@ -17,6 +18,7 @@ ImportAliyunOssSdk()
 ImportJsonCpp()
 ImportNlohmannJson()
 ImportCmdline()
+ImportGflags()
 
 project(aliossc)
 message(STATUS "project bin dir: ${PROJECT_BINARY_DIR}") # PROJECT_BINARY_DIR 必须要 project 之后
@@ -25,3 +27,4 @@ ImportAliyunOssSdk3PLib()
 
 add_subdirectory(aliosst)
 add_subdirectory(test1)
+add_subdirectory(argsgflags)

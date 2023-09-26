@@ -10,6 +10,7 @@ include("cmake/ImportNlohmannJson.cmake")
 include("cmake/ImportCmdline.cmake")
 include("cmake/ImportGflags.cmake")
 include("cmake/ImportCli11.cmake")
+include("cmake/ImportBlend2D.cmake")
 
 # Ali settings TODO 去掉不必要的编译项目例如示例
 # set(BUILD_SAMPLE OFF)
@@ -21,6 +22,7 @@ ImportNlohmannJson()
 ImportCmdline()
 ImportGflags()
 ImportCli11()
+ImportBlend2D()
 
 project(aliossc)
 message(STATUS "project bin dir: ${PROJECT_BINARY_DIR}") # PROJECT_BINARY_DIR 必须要 project 之后
@@ -31,3 +33,4 @@ add_subdirectory(aliosst)
 add_subdirectory(test1)
 add_subdirectory(argsgflags)
 add_subdirectory(argscli11)
+add_subdirectory(uiblend2d)

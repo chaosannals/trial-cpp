@@ -5,6 +5,7 @@ function(
 )
     message(STATUS "GnuWin32 flex bin download start.")
     set(GNUWIN32_FLEX_DIR "${CMAKE_BINARY_DIR}/flex")
+    set(GNUWIN32_FLEX_BIN_DIR "${GNUWIN32_FLEX_DIR}/bin" PARENT_SCOPE)
 
     ExternalProject_Add(
         flex
@@ -24,5 +25,13 @@ function(
         STEP_TARGETS build
 	    EXCLUDE_FROM_ALL TRUE
     )
-    message(STATUS "GnuWin32 bison bin download final.")
+    message(STATUS "GnuWin32 flex bin download final.")
+endfunction()
+
+function(
+    GnuWin32_Flex
+    FLEX_SOURCE
+    FLEX_TARGET
+)
+
 endfunction()

@@ -9,3 +9,4 @@ GnuWin32_DownloadBison()
 project(gnuwin32demo)
 
 add_subdirectory(calcul)
+add_subdirectory(woco)

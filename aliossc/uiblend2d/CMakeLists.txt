@@ -24,6 +24,11 @@ target_link_directories(
 )
 
 if (MSVC)
+    set_target_properties(
+		uiblend2d
+		PROPERTIES
+		MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
+	)
     target_link_libraries(
         uiblend2d
         PRIVATE

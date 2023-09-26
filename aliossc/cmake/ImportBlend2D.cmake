@@ -14,7 +14,7 @@ function(
     set(BLEND2D_ASMJIT_SRC_DIR "${BLEND2D_DIR}/asmjit") # 目录必须放在 blend2d 源码同级
 
     set(BLEND2D_OUT_DIR "${BLEND2D_DIR}/out" PARENT_SCOPE)
-
+    #set(BLEND2D_STATIC TRUE)
     message(STATUS "blend2d dir: ${BLEND2D_DIR}")
 
     # 依赖的 AsmJit 只拉取源码，目录必须和 blend2d 同级且目录名叫 asmjit 
@@ -45,8 +45,11 @@ function(
     
         SOURCE_DIR "${BLEND2D_SRC_DIR}"
 
+        # 可以在这里通过 -D 设置参数
+        # 静态设置 -DBLEND2D_EMBED=TRUE -DBLEND2D_STATIC=TRUE 不知道为什么会少了几个函数的定义
         CONFIGURE_COMMAND "${CMAKE_COMMAND}" -S "${BLEND2D_SRC_DIR}" -B "${BLEND2D_BUILD_DIR}"
-	    BUILD_COMMAND "${CMAKE_COMMAND}" "--build" "${BLEND2D_BUILD_DIR}" "--config" "${CMAKE_BUILD_TYPE}"
+	    
+        BUILD_COMMAND "${CMAKE_COMMAND}" "--build" "${BLEND2D_BUILD_DIR}" "--config" "${CMAKE_BUILD_TYPE}"
 
         # 执行安装 ${CMAKE_MAKE_PROGRAM} 是 ninja 、 make 、nmake 之流。
         INSTALL_COMMAND "${CMAKE_COMMAND}" "--install" "${BLEND2D_BUILD_DIR}" "--config" "${CMAKE_BUILD_TYPE}" "--prefix" "${BLEND2D_OUT_DIR}"

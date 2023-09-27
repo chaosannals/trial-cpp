@@ -10,3 +10,4 @@ project(gnuwin32demo)
 
 add_subdirectory(calcul)
 add_subdirectory(woco)
+add_subdirectory(wocopp)

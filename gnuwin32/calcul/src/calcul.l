@@ -1,7 +1,7 @@
 %option noyywrap nodefault yylineno
 
 %{
-    /* 不引入 stdlib.h 不会报错，atof 居然只给出错误的返回结果，C 果然是弱类型的。 */
+    /* Windows 下不引入 stdlib.h 不会报错，atof 居然只给出错误的返回结果，C 果然是弱类型的。 Linux 下没有这个问题。 */
     #include <stdlib.h>
     #include "calcul.h"
     #include "calcul.tab.h"

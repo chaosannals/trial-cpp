@@ -38,6 +38,7 @@ double eval(struct ast* a) {
     }
     switch (a->nodetype) {
     case 'N': v = a->number; break;
+    case 'M': v = -eval(a->l); break;
     case '+': v = eval(a->l) + eval(a->r); break;
     case '-': v = eval(a->l) - eval(a->r); break;
     case '*': v = eval(a->l) * eval(a->r); break;

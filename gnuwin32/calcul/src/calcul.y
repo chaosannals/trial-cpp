@@ -24,6 +24,7 @@
 stmt: exp EOL {
         printf("= %4.4g\n", eval($1));
         treefree($1);
+        YYACCEPT;
     }
     ;
 

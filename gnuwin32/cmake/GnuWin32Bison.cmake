@@ -5,9 +5,19 @@ function(
     GnuWin32_DownloadBison
 )
     message(STATUS "GnuWin32 bison bin download start.")
-    set(GNUWIN32_BISON_DIR "${CMAKE_BINARY_DIR}/bison")
     set(GNUWIN32_BISON_BIN_DIR "${CMAKE_BINARY_DIR}/bison_bin")
     set(GNUWIN32_BISON_DEP_DIR "${CMAKE_BINARY_DIR}/bison_dep")
+
+    # 设置环境变量
+    set(ENV{BISON_DIR} "${GNUWIN32_BISON_BIN_DIR}/bin")
+    message(STATUS "BISON_DIR: $ENV{BISON_DIR}")
+
+    set(ENV{BISON_DEP_DIR} "${GNUWIN32_BISON_DEP_DIR}/bin")
+    message(STATUS "BISON_DEP_DIR: $ENV{BISON_DEP_DIR}")
+
+    # 把 bin 目录加入到 PATH 路径里面 add_custom_command 需要 配置环境变量 PATH 为此设置的 PATH
+    set(ENV{PATH} "$ENV{PATH};$ENV{BISON_DIR};$ENV{BISON_DEP_DIR}")
+    message(STATUS "PATH: $ENV{PATH}")
 
     ExternalProject_Add(
         bison_bin
@@ -49,8 +59,7 @@ function(
     )
     add_custom_target(
         bison
-        COMMAND "${CMAKE_COMMAND}" "-E" "copy_directory" "${GNUWIN32_BISON_BIN_DIR}/bin" "${GNUWIN32_BISON_DIR}"
-        COMMAND "${CMAKE_COMMAND}" "-E" "copy_directory" "${GNUWIN32_BISON_DEP_DIR}/bin" "${GNUWIN32_BISON_DIR}"
+
         DEPENDS bison_bin bison_dep
     )
     message(STATUS "GnuWin32 bison dep download final.")

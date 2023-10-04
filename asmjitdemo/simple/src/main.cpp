@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <iostream>
 
-// ¹Ù·½Ê¾Àý£¬Êä³ö 1
+// å®˜æ–¹ç¤ºä¾‹ï¼Œè¾“å‡º 1
 using namespace asmjit;
 
 // Signature of the generated function.

@@ -2,6 +2,8 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include "calculjit.h"
+
+    void run_jit(struct ast*);
 %}
 
 %union {

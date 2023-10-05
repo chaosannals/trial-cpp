@@ -14,6 +14,4 @@ double eval(struct ast*);
 void treefree(struct ast*);
 void yyerror(char* s, ...);
 
-void run_jit(struct ast*);
-
 #endif

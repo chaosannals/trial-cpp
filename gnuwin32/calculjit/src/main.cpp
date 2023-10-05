@@ -1,45 +1,82 @@
-#include "calculjit.h"
 #include <iostream>
+#include <stack>
 #include <asmjit/x86.h>
 
 typedef double (*my_func)();
 
 
-extern "C" int yyparse();
+extern "C" {
+    struct ast {
+        int nodetype;
+        double number;
+        int offset;
+        struct ast* l;
+        struct ast* r;
+    };
+    int yyparse();
+    void yyerror(char* s, ...);
+}
 
-void walk_jit(struct ast* a,asmjit::ConstPool &constPool) {
-    // TODO
+// TODO XMM SIMD 指令汇编
+asmjit::x86::Xmm walk_jit(struct ast* a,asmjit::ConstPool &constPool, asmjit::x86::Compiler &cc) {
+    using namespace asmjit;
 
     switch (a->nodetype) {
-    case 'N':
+    case 'N': {
+        auto label = cc.newLabel();
         size_t offset;
         constPool.add(&a->number, sizeof(double), offset);
-        a->offset = offset;
-        break;
-    case 'M':
-        walk_jit(a->l, constPool);
-        break;
-    case '+':
-        walk_jit(a->l, constPool);
-        walk_jit(a->r, constPool);
-        break;
-    case '-':
-        walk_jit(a->l, constPool);
-        walk_jit(a->r, constPool);
-        break;
-    case '*':
-        walk_jit(a->l, constPool);
-        walk_jit(a->r, constPool);
-        break;
-    case '/':
-        walk_jit(a->l, constPool);
-        walk_jit(a->r, constPool);
-        break;
-    default: printf("internal error: bad node $c\n", a->nodetype);
+        auto r = cc.newXmmSs();
+        cc.movupd(r, x86::ptr(label, offset));
+        cc.embedConstPool(label, constPool);
+        return r;
+    }
+    case 'M': {
+        auto label = cc.newLabel();
+        double zero = 0.0;
+        size_t offset;
+        constPool.add(&zero, sizeof(double), offset);
+        auto r = cc.newXmmSs();
+        cc.movupd(r, x86::ptr(label, offset));
+
+        auto n = walk_jit(a->l, constPool, cc);
+
+        cc.subsd(r, n);
+
+        cc.embedConstPool(label, constPool);
+        return r;
+    }
+    case '+': {
+        auto left = walk_jit(a->l, constPool, cc);
+        auto right = walk_jit(a->r, constPool, cc);
+        cc.addsd(left, right);
+        return left;
+    }
+    case '-': {
+        auto left = walk_jit(a->l, constPool, cc);
+        auto right = walk_jit(a->r, constPool, cc);
+        cc.subsd(left, right);
+        return left;
+    }
+    case '*': {
+        auto left = walk_jit(a->l, constPool, cc);
+        auto right = walk_jit(a->r, constPool, cc);
+        cc.mulsd(left, right);
+        return left;
+    }
+    case '/': {
+        auto left = walk_jit(a->l, constPool, cc);
+        auto right = walk_jit(a->r, constPool, cc);
+        cc.divsd(left, right);
+        return left;
+    }
+    default:
+        printf("internal error: bad node $c\n", a->nodetype);
+        return cc.newXmm();
     }
 }
 
-void run_jit(struct ast* a) {
+extern "C" void run_jit(struct ast* a) {
     using namespace asmjit;
 
     if (!a) {
@@ -49,7 +86,7 @@ void run_jit(struct ast* a) {
 
     JitRuntime runtime;
     CodeHolder code;
-    code.init(runtime.environment());
+    code.init(runtime.codeInfo());
     x86::Compiler cc(&code);
     Zone zone(1024);
     ConstPool constPool(&zone);
@@ -57,7 +94,8 @@ void run_jit(struct ast* a) {
     auto myfunc = cc.addFunc(FuncSignatureT<double>());
 
     // 走树
-    walk_jit(a, constPool);
+    auto result = walk_jit(a, constPool, cc);
+    cc.ret(result);
 
     cc.endFunc();
     cc.finalize();
@@ -65,12 +103,13 @@ void run_jit(struct ast* a) {
     my_func func;
     auto error = runtime.add(&func, &code);
 
+    std::cout << "jit error: " << error << std::endl;
+
     auto r = func();
 
     runtime.release(func);
 
-    std::cout << "jit error: " << error << std::endl
-        << "jit result: " << r << std::endl;
+    std::cout << "jit result: " << r << std::endl;
     
     return;
 }

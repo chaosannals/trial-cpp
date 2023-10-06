@@ -18,55 +18,43 @@ extern "C" {
 }
 
 // TODO XMM SIMD 指令汇编
-asmjit::x86::Xmm walk_jit(struct ast* a,asmjit::ConstPool &constPool, asmjit::x86::Compiler &cc) {
+asmjit::x86::Xmm walk_jit(struct ast* a, asmjit::x86::Compiler &cc) {
     using namespace asmjit;
 
     switch (a->nodetype) {
     case 'N': {
-        auto label = cc.newLabel();
-        size_t offset;
-        constPool.add(&a->number, sizeof(double), offset);
-        auto r = cc.newXmmSs();
-        cc.movupd(r, x86::ptr(label, offset));
-        cc.embedConstPool(label, constPool);
+        auto n = cc.newDoubleConst(ConstPoolScope::kLocal, a->number);
+        auto r = cc.newXmmSd();
+        cc.movsd(r, n);
         return r;
     }
     case 'M': {
-        auto label = cc.newLabel();
-        double zero = 0.0;
-        size_t offset;
-        constPool.add(&zero, sizeof(double), offset);
-        auto r = cc.newXmmSs();
-        cc.movupd(r, x86::ptr(label, offset));
-
-        auto n = walk_jit(a->l, constPool, cc);
-
+        auto n = cc.newDoubleConst(ConstPoolScope::kLocal, 0.0);
+        auto r = walk_jit(a->l, cc);
         cc.subsd(r, n);
-
-        cc.embedConstPool(label, constPool);
         return r;
     }
     case '+': {
-        auto left = walk_jit(a->l, constPool, cc);
-        auto right = walk_jit(a->r, constPool, cc);
+        auto left = walk_jit(a->l, cc);
+        auto right = walk_jit(a->r, cc);
         cc.addsd(left, right);
         return left;
     }
     case '-': {
-        auto left = walk_jit(a->l, constPool, cc);
-        auto right = walk_jit(a->r, constPool, cc);
+        auto left = walk_jit(a->l, cc);
+        auto right = walk_jit(a->r, cc);
         cc.subsd(left, right);
         return left;
     }
     case '*': {
-        auto left = walk_jit(a->l, constPool, cc);
-        auto right = walk_jit(a->r, constPool, cc);
+        auto left = walk_jit(a->l, cc);
+        auto right = walk_jit(a->r, cc);
         cc.mulsd(left, right);
         return left;
     }
     case '/': {
-        auto left = walk_jit(a->l, constPool, cc);
-        auto right = walk_jit(a->r, constPool, cc);
+        auto left = walk_jit(a->l, cc);
+        auto right = walk_jit(a->r, cc);
         cc.divsd(left, right);
         return left;
     }
@@ -86,7 +74,7 @@ extern "C" void run_jit(struct ast* a) {
 
     JitRuntime runtime;
     CodeHolder code;
-    code.init(runtime.codeInfo());
+    code.init(runtime.environment(), runtime.cpuFeatures());
     x86::Compiler cc(&code);
     Zone zone(1024);
     ConstPool constPool(&zone);
@@ -94,7 +82,7 @@ extern "C" void run_jit(struct ast* a) {
     auto myfunc = cc.addFunc(FuncSignatureT<double>());
 
     // 走树
-    auto result = walk_jit(a, constPool, cc);
+    auto result = walk_jit(a, cc);
     cc.ret(result);
 
     cc.endFunc();

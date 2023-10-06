@@ -14,3 +14,5 @@ CloneAsmJitTo(${ASMJIT_SRC_DIR})
 add_subdirectory(simple)
 add_subdirectory(funcdemo)
 add_subdirectory(avxdemo)
+add_subdirectory(fibdemo)
+

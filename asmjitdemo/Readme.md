@@ -10,3 +10,9 @@ Gpd double word  双字=4字节
 Gpd quat word    四字=8字节
 GpbHi  High      1字节 例如  ah bh
 GpbLo  Low       1字节 例如  al bl
+
+Xmm
+XmmSs scalar single 单精度
+XmmSd scalar double 双精度
+XmmPs
+XmmPd

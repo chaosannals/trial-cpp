@@ -16,7 +16,7 @@ int main() {
         rt.cpuFeatures());
     x86::Compiler cc(&code);
 
-    cc.addFunc(FuncSignatureT<int>());// 这里没有获取返回值 FuncNode*， 而是下面直接操作栈。
+    cc.addFunc(FuncSignatureT<int>());
 
     x86::Gp p = cc.newIntPtr("p"); // 只是下面展示 lea 指令用的。
     x86::Gp i = cc.newIntPtr("i"); // 索引 i

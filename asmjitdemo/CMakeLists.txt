@@ -15,4 +15,4 @@ add_subdirectory(simple)
 add_subdirectory(funcdemo)
 add_subdirectory(avxdemo)
 add_subdirectory(fibdemo)
-
+add_subdirectory(stackdemo)

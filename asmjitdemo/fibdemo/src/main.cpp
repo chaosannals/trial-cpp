@@ -40,24 +40,25 @@ int main() {
     cc.jb(L_Exit);
 
     // f(x - 1)
-    //cc.mov(y, x);                     // y 取 x 作为初始的值
-    cc.dec(x);                        // 递减 x
+    cc.dec(x);                        // 递减 x （第一次递减 所以是 x - 1）
     InvokeNode* fx1;           // 函数调用 点
     cc.invoke(&fx1,            //   - fx1 (output).
         funcNode->label(),              //   - 指定调用的函数标签
         FuncSignatureT<int, int>());    //   - 指定调用的函数结构声明斐波那契数列
+    // 注：调用指令的位置以 invoke 为准，下面的 setArg setRet 是细节设置。
     fx1->setArg(0, x);         // 设置参数 x
     fx1->setRet(0, y);         // 设置参数返回在 y 里
 
 
     // f(x - 2)
-    cc.dec(x);                        // 递减 x
+    cc.dec(x);                        // 递减 x （第二次递减 所以是 x - 2）
     InvokeNode* fx2;
     cc.invoke(
         &fx2,
         funcNode->label(),              //   - 指定调用的函数标签
         FuncSignatureT<int, int>()    //   - 指定调用的函数结构声明斐波那契数列
     );
+    // 注：调用指令的位置以 invoke 为准，下面的 setArg setRet 是细节设置。
     fx2->setArg(0, x);
     fx2->setRet(0, x); //设置参数返回在 x 里
 

@@ -1,0 +1,9 @@
+add_executable(asmjit_simple)
+
+target_link_libraries(asmjit_simple AsmJit::AsmJit)
+
+target_sources(
+	asmjit_simple
+	PRIVATE
+	"src/main.cpp"
+)

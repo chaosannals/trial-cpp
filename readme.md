@@ -3,6 +3,24 @@
 ## CMake
 
 由于历史原因 c/c++ 的项目是没有统一的包管理，甚至没有统一个构建流程。
+
+## 替代 makefile 的命令
+
+[官方文档](https://cmake.org/cmake/help/latest/command/add_custom_command.html#examples-generating-files)
+
+```cmake
+# 这个命令这种写法可以提到 makefile 的模式
+# 1.目标结果 OUTPUT  2.依赖文件 DEPENDS  3.执行命令 COMMAND
+# 所以可以替代 makefile
+add_custom_command(
+  OUTPUT "out-$<CONFIG>.c"
+  COMMAND someTool -i ${CMAKE_CURRENT_SOURCE_DIR}/in.txt
+                   -o "out-$<CONFIG>.c"
+                   -c "$<CONFIG>"
+  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/in.txt
+  VERBATIM)
+```
+
 ### ExternalProject 和 FetchContent 
 
 如果要引入的库是自己定义的流程，选用 ExternalProject 编译获取生成物，再通过配置头文件导入，二进制链接路径等配置，引入。

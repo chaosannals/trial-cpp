@@ -4,6 +4,11 @@
 #include <memory>
 #include <leveldb/db.h>
 #include <leveldb/write_batch.h>
+//#include <faker-cxx/Date.h>
+#include <faker-cxx/Internet.h>
+//#include <faker-cxx/Location.h>
+#include <faker-cxx/String.h>
+#include <faker-cxx/Person.h>
 
 std::unique_ptr<leveldb::DB> open_db() {
     leveldb::DB* db;
@@ -30,13 +35,26 @@ int main() {
 
     s = udb->Delete(leveldb::WriteOptions(), "aaa");
 
-    leveldb::WriteBatch batch;
-    for (int i = 0; i < 1000; ++i) {
-        batch.Put(std::format("key{0}", i), std::format("value{0}", i));
-    }
     leveldb::WriteOptions wo;
     wo.sync = true; // 同步写入。
+
+    leveldb::WriteBatch batch;
+    for (int i = 0; i < 1000; ++i) {
+        const auto id = faker::String::uuid();
+        const auto username = faker::Internet::username();
+        std::cout << "put:" << id << ":" << username << std::endl;
+        batch.Put(id, username);
+    }
     s = udb->Write(wo, &batch);
+
+    leveldb::WriteBatch batch2;
+    for (int i = 0; i < 1000; ++i) {
+        const auto id = faker::String::uuid();
+        const auto fullName = faker::Person::fullName(faker::Country::China);
+        std::cout << "put:" << id << ":" << fullName << std::endl;
+        batch.Put(id, fullName);
+    }
+    s = udb->Write(wo, &batch2);
 
     std::cout << "batch write(" << s.ToString() << ")" << std::endl;
     

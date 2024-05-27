@@ -1,0 +1,21 @@
+﻿include(FetchContent)
+
+function(FetchFaker)
+    # 指定编译器使用 utf-8，非 utf8-bom 的 utf8 源码， 中文 VS 默认识别成 GBK, 会导致部分库编码识别错误。
+    # 在引入这个库前，项目开始时，要提前用 add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/source-charset:utf-8>") 配置
+    # 这个库源码是 utf-8 ,但是缺少 bom ，导致被 VS 识别成 GBK 字符集。
+    FetchContent_Declare(
+        faker
+        GIT_REPOSITORY git@github.com:cieslarmichal/faker-cxx.git
+        GIT_TAG main # v1.0.0
+        GIT_SHALLOW ON # 浅克隆，git 参数加 --depth=1
+        GIT_PROGRESS ON # 打印下载进度
+        # 把 submodule 里面的 https 换成 ssh 的，国内比较大几率能拉成功。
+        # 例如把 https://github.com/google/googletest.git 换成 git@github.com:google/googletest.git
+        # GIT_SUBMODULES 默认会拉，就是被墙了，会拉失败。
+    )
+    FetchContent_MakeAvailable(faker)
+    set(FAKER_SRC_DIR "${faker_SOURCE_DIR}")
+    set(FAKER_SRC_DIR "${faker_SOURCE_DIR}" PARENT_SCOPE)
+    message(STATUS "[faker] ${FAKER_SRC_DIR}")
+endfunction()

@@ -13,8 +13,23 @@ function(FetchFaker)
         # 把 submodule 里面的 https 换成 ssh 的，国内比较大几率能拉成功。
         # 例如把 https://github.com/google/googletest.git 换成 git@github.com:google/googletest.git
         # GIT_SUBMODULES 默认会拉，就是被墙了，会拉失败。
+
+        # 指定编译参数 ，无效。
+        # COMPILE_OPTIONS "$<$<CXX_COMPILER_ID:MSVC>:/source-charset:utf-8>"
+        # 指定编译参数 ，无效。
+        # INTERFACE_COMPILE_OPTIONS "$<$<CXX_COMPILER_ID:MSVC>:/source-charset:utf-8>"
     )
     FetchContent_MakeAvailable(faker)
+
+    # FetchContent 的不属于 project 的 target, 不可以通过 target 修改 target 属性。
+    # set_target_properties(faker-cxx::faker-cxx PROPERTIES INTERFACE_COMPILE_OPTIONS "$<$<CXX_COMPILER_ID:MSVC>:/source-charset:utf-8>")
+
+    # FetchContent 的不属于 project 的 target, 不可以通过 target 修改 编译参数。
+    #target_compile_options(
+    #    faker
+    #    PUBLIC
+    #    "$<$<CXX_COMPILER_ID:MSVC>:/source-charset:utf-8>"
+    #)
     set(FAKER_SRC_DIR "${faker_SOURCE_DIR}")
     set(FAKER_SRC_DIR "${faker_SOURCE_DIR}" PARENT_SCOPE)
     message(STATUS "[faker] ${FAKER_SRC_DIR}")

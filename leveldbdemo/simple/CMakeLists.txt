@@ -22,6 +22,19 @@ if (MSVC)
     )
 endif()
 
+target_include_directories(
+    simple
+    PUBLIC
+    "${CPPJIEBA_INC_DIR}"
+    "${LIMONP_INC_DIR}"
+)
+
+add_custom_command(
+    TARGET simple
+    POST_BUILD
+	COMMAND "${CMAKE_COMMAND}" "-E" "copy_directory" "${CPPJIEBA_SRC_DIR}/dict" "${CMAKE_CURRENT_BINARY_DIR}"
+)
+
 target_link_libraries(
     simple
     leveldb

@@ -10,9 +10,11 @@ add_compile_options("$<$<C_COMPILER_ID:MSVC>:/source-charset:utf-8>")
 
 include("cmake/LevelDb.cmake")
 include("cmake/Faker.cmake")
+include("cmake/CppJieBa.cmake")
 
 FetchLevelDb()
 FetchFaker()
+FetchCppJieBa()
 
 project(leveldbdemo)
 

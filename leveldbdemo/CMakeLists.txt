@@ -11,11 +11,14 @@ add_compile_options("$<$<C_COMPILER_ID:MSVC>:/source-charset:utf-8>")
 include("cmake/LevelDb.cmake")
 include("cmake/Faker.cmake")
 include("cmake/CppJieBa.cmake")
+include("cmake/Oatpp.cmake")
 
 FetchLevelDb()
 FetchFaker()
 FetchCppJieBa()
+FetchOatpp()
 
 project(leveldbdemo)
 
 add_subdirectory(simple)
+add_subdirectory(oatppdemo)

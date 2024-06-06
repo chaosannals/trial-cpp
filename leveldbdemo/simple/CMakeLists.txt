@@ -37,6 +37,7 @@ add_custom_command(
 
 target_link_libraries(
     simple
+    PUBLIC
     leveldb
     faker-cxx
 )

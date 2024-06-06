@@ -7,7 +7,9 @@ function(FetchFaker)
     FetchContent_Declare(
         faker
         GIT_REPOSITORY git@github.com:cieslarmichal/faker-cxx.git
-        GIT_TAG main # v1.0.0
+        # GIT_TAG v1.0.0 #此版本依赖的测试库 gtest 在和 leveldb 同时使用时版本号冲突。
+        #GIT_TAG main #主分支没有卡住版本，一直是最新，这个库构建每个版本都有点不同。
+        GIT_TAG d1ccb72dabb249ee4b2a288ae96d55e61b12175b # 目前只解决这个版本的引入。其他版本要自行解决。
         GIT_SHALLOW ON # 浅克隆，git 参数加 --depth=1
         GIT_PROGRESS ON # 打印下载进度
         # 把 submodule 里面的 https 换成 ssh 的，国内比较大几率能拉成功。

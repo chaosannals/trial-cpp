@@ -58,8 +58,7 @@ template<class... Ts> detail::type_list<Ts...> type_list{ };
 
 int main() {
     using namespace dsl;
-    constexpr auto v =
-        type_list<int, const double, float>
+    constexpr auto v = type_list<int, const double, float>
         | filter([]<class T> { return not std::is_const_v<T>; })
         | transform([]<class T>() -> T* { })
         | reverse

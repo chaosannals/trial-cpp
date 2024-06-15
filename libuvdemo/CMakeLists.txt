@@ -10,3 +10,4 @@ project(libuvdemo)
 
 add_subdirectory(simple)
 add_subdirectory(idledemo)
+add_subdirectory(fsdemo)

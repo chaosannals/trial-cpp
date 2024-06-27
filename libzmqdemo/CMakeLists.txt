@@ -11,3 +11,4 @@ FetchCppzmq() # cpp 封装，依赖 C 的 LIBZMQ
 project(libzmqdemo)
 
 add_subdirectory(simple)
+add_subdirectory(cpptcpdemo)
